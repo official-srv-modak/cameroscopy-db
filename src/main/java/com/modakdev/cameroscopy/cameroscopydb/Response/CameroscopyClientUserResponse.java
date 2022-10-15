@@ -30,7 +30,7 @@ public class CameroscopyClientUserResponse extends CameroscopyResponse{
 
     @Override
     public String toString() {
-        return "CameroscopyClientUserResponse{" +
+        return "CameroscopyClientUserResponse : {" +
                 "user=" + user +
                 ", txnId='" + txnId + '\'' +
                 ", txnDate='" + txnDate + '\'' +

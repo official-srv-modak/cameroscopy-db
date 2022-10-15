@@ -38,6 +38,8 @@ public class CameroscopyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home").hasAuthority("USER")
                 .antMatchers("/admin").hasAuthority("ADMIN")
                 .antMatchers("/create").hasAuthority("USER")
+                .antMatchers("/delete").hasAuthority("USER")
+                .antMatchers("/user/{email}").hasAuthority("USER")
                 .anyRequest().authenticated().and().httpBasic();
 
 //        http.httpBasic();

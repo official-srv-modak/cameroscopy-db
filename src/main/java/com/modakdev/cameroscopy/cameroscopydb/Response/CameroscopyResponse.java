@@ -9,7 +9,7 @@ public abstract class CameroscopyResponse {
     protected final static String txnId = UUID.randomUUID().toString();
     protected static String txnDate = String.valueOf(java.time.LocalDate.now());
     protected static String txnTime = String.valueOf(java.time.LocalTime.now());
-    protected HttpStatus status = HttpStatus.OK;
+    protected HttpStatus status = HttpStatus.BAD_GATEWAY;
 
     protected String message = "";
 
