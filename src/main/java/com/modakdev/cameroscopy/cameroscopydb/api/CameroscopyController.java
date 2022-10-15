@@ -1,4 +1,4 @@
-package com.modakdev.cameroscopy.cameroscopydb.Api;
+package com.modakdev.cameroscopy.cameroscopydb.api;
 
 import com.modakdev.cameroscopy.cameroscopydb.Response.CameroscopyClientUserResponse;
 import com.modakdev.cameroscopy.cameroscopydb.configuration.CameroscopyClientUser;
