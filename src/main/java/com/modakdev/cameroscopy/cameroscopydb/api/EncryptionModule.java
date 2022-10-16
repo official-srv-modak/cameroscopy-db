@@ -1,17 +1,10 @@
 package com.modakdev.cameroscopy.cameroscopydb.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -21,20 +14,15 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
-import java.util.Properties;
 
-@Component
-@PropertySource("classpath:application.properties")
 public class EncryptionModule {
 
-    @Autowired
     public static Environment env;
 
     private static String privateKey = "/Users/souravmodak/Documents/cameroscopy-db/private_key/private_key.der";
 
     private static String publicKey = "/Users/souravmodak/Documents/cameroscopy-db/private_key/public_key.der";
 
-    @Autowired
     public static PublicKey getPublicKey(String filename){
         PublicKey publicKey = null;
         try{
@@ -53,7 +41,6 @@ public class EncryptionModule {
         return publicKey;
     }
 
-    @Autowired
     public static PrivateKey getPvtKey(String filename)
             throws Exception {
 
@@ -65,7 +52,6 @@ public class EncryptionModule {
         return kf.generatePrivate(spec);
     }
 
-    @Autowired
     public static String encrypt(String secretMessage)
     {
         String encodedMessage = "";
@@ -93,7 +79,6 @@ public class EncryptionModule {
         }
     }
 
-    @Autowired
     public static String decrypt(String encryptedMessage)
     {
         String encodedMessage = "";
@@ -118,4 +103,6 @@ public class EncryptionModule {
             return encodedMessage;
         }
     }
+
+
 }
