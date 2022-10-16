@@ -3,6 +3,7 @@ package com.modakdev.cameroscopy.cameroscopydb.api;
 import com.modakdev.cameroscopy.cameroscopydb.Response.CameroscopyClientUserResponse;
 import com.modakdev.cameroscopy.cameroscopydb.configuration.CameroscopyClientUser;
 import com.modakdev.cameroscopy.cameroscopydb.configuration.CameroscopyClientUserRepository;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -46,19 +47,29 @@ public class UserOperationsService {
             return response;
         }
     }
-    public static CameroscopyClientUserResponse getUser(CameroscopyClientUserRepository repo, String encryptedEmail)
+    public static CameroscopyClientUserResponse getUser(CameroscopyClientUserRepository repo, String email)
     {
         CameroscopyClientUserResponse response = new CameroscopyClientUserResponse();
         CameroscopyClientUser user1;
         try
         {
-            String email = EncryptionModule.decrypt(encryptedEmail);
+           // String email = EncryptionModule.decrypt(encryptedEmail);
             user1 = repo.findByEmail(email);
-            response.setUser(user1);
-            response.setMessage("User found");
-            response.setStatus(HttpStatus.FOUND);
-           // LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
-            LOGGER.info("Success : "+response.toString());
+            if(user1 != null)
+            {
+                response.setUser(user1);
+                response.setMessage("User found");
+                response.setStatus(HttpStatus.FOUND);
+                // LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
+                LOGGER.info("Success : "+response.toString());
+            }
+            else
+            {
+                response.setMessage("User NOT found");
+                response.setStatus(HttpStatus.NOT_FOUND);
+                // LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
+                LOGGER.info("Error : "+response.toString());
+            }
         }
         catch (Exception e)
         {

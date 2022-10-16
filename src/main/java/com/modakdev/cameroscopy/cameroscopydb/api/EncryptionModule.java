@@ -1,11 +1,14 @@
 package com.modakdev.cameroscopy.cameroscopydb.api;
 
 
+import com.modakdev.cameroscopy.cameroscopydb.CameroscopyDbApplication;
+import org.springframework.boot.SpringApplication;
 import org.springframework.core.env.Environment;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -102,6 +105,21 @@ public class EncryptionModule {
         finally {
             return encodedMessage;
         }
+    }
+
+    public static Object decryptObject(Object obj)
+    {
+        Object output = new Object();
+        Class cls = obj.getClass();
+        Field[] fields = cls.getDeclaredFields();
+        for(int i = 0; i < fields.length; i++) {
+            System.out.println("The field is: " + fields[i].toString());
+        }
+        return output;
+    }
+
+    public static void main(String[] args) {
+        //decryptObject()
     }
 
 
