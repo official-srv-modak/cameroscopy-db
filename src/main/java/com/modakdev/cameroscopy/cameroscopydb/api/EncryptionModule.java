@@ -6,14 +6,13 @@ import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
@@ -23,6 +22,24 @@ public class EncryptionModule {
 
     @Value("${private.key.location}")
     private static String privateKeyPath;
+
+    public static PublicKey getPublicKey(String filename){
+        PublicKey publicKey = null;
+        try{
+            byte[] keyBytes = Files.readAllBytes(Paths.get(filename));
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            publicKey = keyFactory.generatePublic(keySpec);
+            return publicKey;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return publicKey;
+    }
 
     public static PrivateKey getPvtKey(String filename)
             throws Exception {
@@ -41,7 +58,7 @@ public class EncryptionModule {
         Cipher encryptCipher = null;
         try {
             encryptCipher = Cipher.getInstance("RSA");
-            encryptCipher.init(Cipher.ENCRYPT_MODE, getPvtKey("/Users/souravmodak/Documents/cameroscopy-db/private_key/private_key.der"));
+            encryptCipher.init(Cipher.ENCRYPT_MODE, getPublicKey("/Users/souravmodak/Documents/cameroscopy-db/private_key/public_key.der"));
 
             byte[] secretMessageBytes = secretMessage.getBytes(StandardCharsets.UTF_8);
             byte[] encryptedMessageBytes = encryptCipher.doFinal(secretMessageBytes);
@@ -70,7 +87,7 @@ public class EncryptionModule {
             cipher.init(Cipher.DECRYPT_MODE, getPvtKey("/Users/souravmodak/Documents/cameroscopy-db/private_key/private_key.der"));
 
             byte[] bytes = cipher.doFinal(Base64.getDecoder().decode(encryptedMessage));
-            return new String(bytes);
+            encodedMessage = new String(bytes);
 
 
         } catch (NoSuchAlgorithmException e) {

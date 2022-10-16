@@ -13,7 +13,9 @@ public class CameroscopyDbApplication {
 	}*/
 	public static void main(String[] args) {
 		//SpringApplication.run(CameroscopyDbApplication.class, args);
-		System.out.println(EncryptionModule.decrypt("jub4kgWxGmcaGB31KASpHRxSftbwjGAJqm7qxTEEgk+hDEhNTe4foaWDaKUb/uSoZlb9vRA+sxp0hAX/Z3NrIsNAQPz9LIubSNUxysCngF5+2gp1jtkLLmki64J2LPdajP6snK+cQ/MCO2mQf7JvppIf8DVbBKe7N6etuwuNlMIyKRL5L7B5EnEvt9fSsJrUdoVuXCwkAPZ+WNocP85VaB8OIV5+KlGwUdJUj0ETQY61pkjZY92yDoKHzKuf0Zmnx59kzEf5u0NuZQLT5qOSzuTT1FO609ftCPeUhRg0NUj3Kghc79Cfr8bKgQYpLMyXloFO8Tu4wGJkItWN2YtRTA=="));
+
+		//System.out.println(EncryptionModule.encrypt("abc"));
+		System.out.println(EncryptionModule.decrypt("P+Ml2Cn1NduKuMd7TNMsVquorS3fALLe2CXDsdcML2138dYiYT8sFUv0urBVyBTU/7ba2DnRj1KYvsl9GSQ1pn86fMs+iJ6DXUoNpeponOrYiMpONAUU7nUNib8GseBlVMA0SD1p8xR4r+AYWPJeChCTKNhHuxwvdFisshsZLsJ9WPd+wObBpLIouQOKi1uZgFDcaiUoZoJHuXynkqVwoX1NXZiosc8ondjLb04MA7oiY+GC+m1jDxlW/VrqpTYcQ7VawGYWGOGIVSvkLtEYcgknL15UZ8g45DFJEB0IO1n0rio5c7rc4FL6GlcXX4PfcQka+8sVjk0v+nDfWcPaVw=="));
 
 	}
 
