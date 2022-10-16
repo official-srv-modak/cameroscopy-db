@@ -1,14 +1,11 @@
-package com.modakdev.cameroscopy.cameroscopydb.api;
+package com.modakdev.cameroscopy.cameroscopydb.encryption;
 
 
-import com.modakdev.cameroscopy.cameroscopydb.CameroscopyDbApplication;
-import org.springframework.boot.SpringApplication;
 import org.springframework.core.env.Environment;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;

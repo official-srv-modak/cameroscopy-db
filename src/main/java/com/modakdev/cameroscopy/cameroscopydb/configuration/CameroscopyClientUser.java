@@ -1,22 +1,29 @@
 package com.modakdev.cameroscopy.cameroscopydb.configuration;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.modakdev.cameroscopy.cameroscopydb.encryption.AESEncryption;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnTransformer;
 
-import static com.modakdev.cameroscopy.cameroscopydb.api.EncryptionModule.decrypt;
-import static com.modakdev.cameroscopy.cameroscopydb.api.EncryptionModule.encrypt;
+import javax.persistence.*;
+
+import static com.modakdev.cameroscopy.cameroscopydb.encryption.EncryptionModule.decrypt;
+import static com.modakdev.cameroscopy.cameroscopydb.encryption.EncryptionModule.encrypt;
 
 @Entity
+@Data
 public class CameroscopyClientUser {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+    @Convert(converter = AESEncryption.class)
     private String email;
+    @Convert(converter = AESEncryption.class)
     private String firstname;
+    @Convert(converter = AESEncryption.class)
     private String lastname;
+    @Convert(converter = AESEncryption.class)
     private String role;
 
     public CameroscopyClientUser(String email, String firstname, String lastname) {

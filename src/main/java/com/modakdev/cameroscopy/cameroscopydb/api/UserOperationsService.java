@@ -4,6 +4,7 @@ import com.modakdev.cameroscopy.cameroscopydb.Response.CameroscopyClientUserResp
 import com.modakdev.cameroscopy.cameroscopydb.Response.CameroscopyResponse;
 import com.modakdev.cameroscopy.cameroscopydb.configuration.CameroscopyClientUser;
 import com.modakdev.cameroscopy.cameroscopydb.configuration.CameroscopyClientUserRepository;
+import com.modakdev.cameroscopy.cameroscopydb.encryption.EncryptionModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

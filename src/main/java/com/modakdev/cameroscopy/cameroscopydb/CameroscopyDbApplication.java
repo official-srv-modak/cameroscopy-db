@@ -1,6 +1,5 @@
 package com.modakdev.cameroscopy.cameroscopydb;
 
-import com.modakdev.cameroscopy.cameroscopydb.api.EncryptionModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
