@@ -4,12 +4,9 @@ import com.modakdev.cameroscopy.cameroscopydb.Response.CameroscopyClientUserResp
 import com.modakdev.cameroscopy.cameroscopydb.Response.CameroscopyResponse;
 import com.modakdev.cameroscopy.cameroscopydb.configuration.CameroscopyClientUser;
 import com.modakdev.cameroscopy.cameroscopydb.configuration.CameroscopyClientUserRepository;
-import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
@@ -41,10 +38,7 @@ public class UserOperationsService {
             }
             else
             {
-                user1 = repo.findByEmail(user.getEmail());
-                response.setUser(user1);
-                response.setMessage("Request failed");
-                response.setStatus(HttpStatus.NOT_ACCEPTABLE);
+                requestFailed(response, e);
             }
         }
         finally

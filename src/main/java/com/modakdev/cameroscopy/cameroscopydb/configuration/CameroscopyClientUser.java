@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import static com.modakdev.cameroscopy.cameroscopydb.api.EncryptionModule.decrypt;
+import static com.modakdev.cameroscopy.cameroscopydb.api.EncryptionModule.encrypt;
 
 @Entity
 public class CameroscopyClientUser {
@@ -81,6 +82,16 @@ public class CameroscopyClientUser {
         output.firstname = decrypt(firstname);
         output.lastname = decrypt(lastname);
         output.role = decrypt(role);
+        return output;
+    }
+
+    public CameroscopyClientUser encryptObject()
+    {
+        CameroscopyClientUser output = new CameroscopyClientUser();
+        output.email = encrypt(email);
+        output.firstname = encrypt(firstname);
+        output.lastname = encrypt(lastname);
+        output.role = encrypt(role);
         return output;
     }
 }
