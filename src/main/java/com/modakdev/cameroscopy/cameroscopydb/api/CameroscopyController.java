@@ -51,4 +51,12 @@ public class CameroscopyController {
         return response;
 
     }
+
+    @RequestMapping("/id/{id}")
+    public CameroscopyClientUserResponse getUserById(@PathVariable("id") Long id)
+    {
+
+        CameroscopyClientUserResponse response = UserOperationsService.getUserById(repo, id);
+        return response;
+    }
 }

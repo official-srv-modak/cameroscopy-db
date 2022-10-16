@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import static com.modakdev.cameroscopy.cameroscopydb.api.EncryptionModule.decrypt;
+
 @Entity
 public class CameroscopyClientUser {
 
@@ -70,5 +72,15 @@ public class CameroscopyClientUser {
                 ", lastName='" + lastname + '\'' +
                 ", role='" + role + '\'' +
                 '}';
+    }
+
+    public CameroscopyClientUser decryptObject()
+    {
+        CameroscopyClientUser output = new CameroscopyClientUser();
+        output.email = decrypt(email);
+        output.firstname = decrypt(firstname);
+        output.lastname = decrypt(lastname);
+        output.role = decrypt(role);
+        return output;
     }
 }

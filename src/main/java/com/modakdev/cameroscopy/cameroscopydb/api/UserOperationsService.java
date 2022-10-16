@@ -1,12 +1,17 @@
 package com.modakdev.cameroscopy.cameroscopydb.api;
 
 import com.modakdev.cameroscopy.cameroscopydb.Response.CameroscopyClientUserResponse;
+import com.modakdev.cameroscopy.cameroscopydb.Response.CameroscopyResponse;
 import com.modakdev.cameroscopy.cameroscopydb.configuration.CameroscopyClientUser;
 import com.modakdev.cameroscopy.cameroscopydb.configuration.CameroscopyClientUserRepository;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Optional;
 
 
 public class UserOperationsService {
@@ -47,13 +52,13 @@ public class UserOperationsService {
             return response;
         }
     }
-    public static CameroscopyClientUserResponse getUser(CameroscopyClientUserRepository repo, String email)
+    public static CameroscopyClientUserResponse getUser(CameroscopyClientUserRepository repo, String encryptedEmail)
     {
         CameroscopyClientUserResponse response = new CameroscopyClientUserResponse();
         CameroscopyClientUser user1;
         try
         {
-           // String email = EncryptionModule.decrypt(encryptedEmail);
+            String email = EncryptionModule.decrypt(encryptedEmail);
             user1 = repo.findByEmail(email);
             if(user1 != null)
             {
@@ -73,10 +78,7 @@ public class UserOperationsService {
         }
         catch (Exception e)
         {
-            response.setMessage("Request failed");
-            response.setStatus(HttpStatus.BAD_REQUEST);
-            LOGGER.error("Exception occurred : "+e);
-            LOGGER.error("Error : "+response.toString());
+            requestFailed(response, e);
         }
         finally
         {
@@ -108,4 +110,46 @@ public class UserOperationsService {
         }
     }
 
+    public static CameroscopyClientUserResponse getUserById(CameroscopyClientUserRepository repo, Long id)
+    {
+        CameroscopyClientUserResponse response = new CameroscopyClientUserResponse();
+        CameroscopyClientUser user1;
+        try
+        {
+           // String email = EncryptionModule.decrypt(encryptedEmail);
+            Optional<CameroscopyClientUser> u = repo.findById(id);
+            user1 = u.get();
+            if(user1 != null)
+            {
+                user1 = user1.decryptObject();
+                response.setUser(user1);
+                response.setMessage("User found");
+                response.setStatus(HttpStatus.FOUND);
+                // LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
+                LOGGER.info("Success : "+response.toString());
+            }
+            else
+            {
+                response.setMessage("User NOT found");
+                response.setStatus(HttpStatus.NOT_FOUND);
+                // LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
+                LOGGER.info("Error : "+response.toString());
+            }
+        }
+        catch (Exception e)
+        {
+            requestFailed(response, e);
+        }
+        finally
+        {
+            return response;
+        }
+    }
+    public static void requestFailed(CameroscopyResponse response, Exception e)
+    {
+        response.setMessage("Request failed");
+        response.setStatus(HttpStatus.BAD_REQUEST);
+        LOGGER.error("Exception occurred : "+e);
+        LOGGER.error("Error : "+response.toString());
+    }
 }

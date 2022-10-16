@@ -107,17 +107,6 @@ public class EncryptionModule {
         }
     }
 
-    public static Object decryptObject(Object obj)
-    {
-        Object output = new Object();
-        Class cls = obj.getClass();
-        Field[] fields = cls.getDeclaredFields();
-        for(int i = 0; i < fields.length; i++) {
-            System.out.println("The field is: " + fields[i].toString());
-        }
-        return output;
-    }
-
     public static void main(String[] args) {
         //decryptObject()
     }
