@@ -46,16 +46,18 @@ public class UserOperationsService {
             return response;
         }
     }
-    public static CameroscopyClientUserResponse getUser(CameroscopyClientUserRepository repo, String email)
+    public static CameroscopyClientUserResponse getUser(CameroscopyClientUserRepository repo, String encryptedEmail)
     {
         CameroscopyClientUserResponse response = new CameroscopyClientUserResponse();
         CameroscopyClientUser user1;
         try
         {
+            String email = EncryptionModule.decrypt(encryptedEmail);
             user1 = repo.findByEmail(email);
             response.setUser(user1);
             response.setMessage("User found");
             response.setStatus(HttpStatus.FOUND);
+           // LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
             LOGGER.info("Success : "+response.toString());
         }
         catch (Exception e)

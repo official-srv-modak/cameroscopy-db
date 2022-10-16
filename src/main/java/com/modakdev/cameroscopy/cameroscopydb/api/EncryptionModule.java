@@ -1,13 +1,18 @@
 package com.modakdev.cameroscopy.cameroscopydb.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,11 +23,18 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Properties;
 
+@Component
+@PropertySource("classpath:application.properties")
 public class EncryptionModule {
 
-    @Value("${private.key.location}")
-    private static String privateKeyPath;
+    @Autowired
+    public static Environment env;
 
+    private static String privateKey = "/Users/souravmodak/Documents/cameroscopy-db/private_key/private_key.der";
+
+    private static String publicKey = "/Users/souravmodak/Documents/cameroscopy-db/private_key/public_key.der";
+
+    @Autowired
     public static PublicKey getPublicKey(String filename){
         PublicKey publicKey = null;
         try{
@@ -41,6 +53,7 @@ public class EncryptionModule {
         return publicKey;
     }
 
+    @Autowired
     public static PrivateKey getPvtKey(String filename)
             throws Exception {
 
@@ -52,13 +65,14 @@ public class EncryptionModule {
         return kf.generatePrivate(spec);
     }
 
+    @Autowired
     public static String encrypt(String secretMessage)
     {
         String encodedMessage = "";
         Cipher encryptCipher = null;
         try {
             encryptCipher = Cipher.getInstance("RSA");
-            encryptCipher.init(Cipher.ENCRYPT_MODE, getPublicKey("/Users/souravmodak/Documents/cameroscopy-db/private_key/public_key.der"));
+            encryptCipher.init(Cipher.ENCRYPT_MODE, getPublicKey(publicKey));
 
             byte[] secretMessageBytes = secretMessage.getBytes(StandardCharsets.UTF_8);
             byte[] encryptedMessageBytes = encryptCipher.doFinal(secretMessageBytes);
@@ -79,12 +93,13 @@ public class EncryptionModule {
         }
     }
 
+    @Autowired
     public static String decrypt(String encryptedMessage)
     {
         String encodedMessage = "";
         try {
             Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.DECRYPT_MODE, getPvtKey("/Users/souravmodak/Documents/cameroscopy-db/private_key/private_key.der"));
+            cipher.init(Cipher.DECRYPT_MODE, getPvtKey(privateKey));
 
             byte[] bytes = cipher.doFinal(Base64.getDecoder().decode(encryptedMessage));
             encodedMessage = new String(bytes);
