@@ -21,6 +21,7 @@ public class UserOperationsService {
         CameroscopyClientUser user1;
         try
         {
+            user = user.decryptObject();
             repo.save(user);
             user1 = user;
             response.setUser(user1);
@@ -85,9 +86,10 @@ public class UserOperationsService {
         CameroscopyClientUserResponse response = new CameroscopyClientUserResponse();
         try
         {
-         //   user1 = repo.findByEmail(email);
-            repo.delete(user);
-            response.setUser(user);
+            user = user.decryptObject();
+            CameroscopyClientUser user1 = repo.findByEmail(user.getEmail());
+            repo.deleteById(user1.getId());
+            response.setUser(user1);
             response.setMessage("User deleted");
             response.setStatus(HttpStatus.OK);
             LOGGER.info("Success : "+response.toString());
@@ -116,7 +118,6 @@ public class UserOperationsService {
             user1 = u.get();
             if(user1 != null)
             {
-                user1 = user1.decryptObject();
                 response.setUser(user1);
                 response.setMessage("User found");
                 response.setStatus(HttpStatus.FOUND);

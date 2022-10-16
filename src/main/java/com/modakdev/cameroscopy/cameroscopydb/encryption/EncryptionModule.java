@@ -105,7 +105,10 @@ public class EncryptionModule {
     }
 
     public static void main(String[] args) {
-        //decryptObject()
+        System.out.println(encrypt("srv12768@gmail.com"));
+        System.out.println(encrypt("Sourav"));
+        System.out.println(encrypt("Modak"));
+        System.out.println(encrypt("USER"));
     }
 
 
