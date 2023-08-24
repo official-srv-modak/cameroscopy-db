@@ -21,7 +21,7 @@ public class UserOperationsService {
         CameroscopyClientUser user1;
         try
         {
-            user = user.decryptObject();
+           // user = user.decryptObject();
             repo.save(user);
             user1 = user;
             response.setUser(user1);
