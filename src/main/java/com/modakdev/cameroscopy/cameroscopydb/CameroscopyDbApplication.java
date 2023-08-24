@@ -1,9 +1,11 @@
 package com.modakdev.cameroscopy.cameroscopydb;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@EnableAutoConfiguration
 public class CameroscopyDbApplication {
 
 	/*@Override
