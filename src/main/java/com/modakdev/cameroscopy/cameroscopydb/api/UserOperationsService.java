@@ -21,7 +21,7 @@ public class UserOperationsService {
         CameroscopyClientUser user1;
         try
         {
-           // user = user.decryptObject();
+            user = user.decryptObject();
             repo.save(user);
             user1 = user;
             response.setUser(user1);
@@ -61,14 +61,14 @@ public class UserOperationsService {
                 response.setUser(user1);
                 response.setMessage("User found");
                 response.setStatus(HttpStatus.FOUND);
-                // LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
+                LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
                 LOGGER.info("Success : "+response.toString());
             }
             else
             {
                 response.setMessage("User NOT found");
                 response.setStatus(HttpStatus.NOT_FOUND);
-                // LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
+                LOGGER.info("EMAIL : "+EncryptionModule.encrypt(email));
                 LOGGER.info("Error : "+response.toString());
             }
         }

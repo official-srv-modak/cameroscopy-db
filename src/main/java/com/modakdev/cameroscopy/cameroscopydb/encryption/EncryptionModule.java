@@ -85,9 +85,12 @@ public class EncryptionModule {
         try {
             Cipher cipher = Cipher.getInstance("RSA");
             cipher.init(Cipher.DECRYPT_MODE, getPvtKey(privateKey));
-
-            byte[] bytes = cipher.doFinal(Base64.getDecoder().decode(encryptedMessage));
-            encodedMessage = new String(bytes);
+            byte[] decodeBytes = Base64.getDecoder().decode(encryptedMessage);
+            //System.out.println("decodeBytes : "+decodeBytes);
+            //byte [] testBytpes = "[B@39bcfb18";
+            byte[] bytes = cipher.doFinal(decodeBytes);
+            //System.out.println("bytes : "+bytes);
+            encodedMessage = new String(bytes, StandardCharsets.UTF_8);
 
 
         } catch (NoSuchAlgorithmException e) {
@@ -105,10 +108,10 @@ public class EncryptionModule {
     }
 
     public static void main(String[] args) {
-        System.out.println(encrypt("srv12768@gmail.com"));
+        /*System.out.println(encrypt("srv12768@gmail.com"));
         System.out.println(encrypt("Sourav"));
         System.out.println(encrypt("Modak"));
-        System.out.println(encrypt("USER"));
+        System.out.println(encrypt("USER"));*/
     }
 
 
