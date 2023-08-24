@@ -32,7 +32,7 @@ public class CameroscopyWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        /*http.authorizeRequests()
 
                 .antMatchers("/").permitAll()
                 .antMatchers("/home").hasAuthority("USER")
@@ -41,9 +41,9 @@ public class CameroscopyWebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/delete").hasAuthority("USER")
                 .antMatchers("/user").hasAuthority("USER")
                 .antMatchers("/id/{id}").hasAuthority("USER")
-                .anyRequest().authenticated().and().httpBasic();
+                .anyRequest().authenticated().and().httpBasic();*/
 
-//        http.httpBasic();
+        http.httpBasic();
 
         http.addFilterAfter(new CsrfRequestFilter(), CsrfFilter.class);
 
