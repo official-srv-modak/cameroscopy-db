@@ -19,9 +19,9 @@ public class EncryptionModule {
 
     public static Environment env;
 
-    private static String privateKey = "/Users/souravmodak/Documents/cameroscopy-db/private_key/private_key.der";
+    private static String privateKey = "private_key/private_key.der";
 
-    private static String publicKey = "/Users/souravmodak/Documents/cameroscopy-db/private_key/public_key.der";
+    private static String publicKey = "private_key/public_key.der";
 
     public static PublicKey getPublicKey(String filename){
         PublicKey publicKey = null;
